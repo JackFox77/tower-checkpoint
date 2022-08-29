@@ -30,6 +30,17 @@
     <button v-if="isCreator" class="btn btn-danger" @click="handleSubmit">Cancel Event</button>
 
     <button v-if="!hasTicket" class="btn btn-success" @click="handleTicket">Get Tickets</button>
+    <section class="row">
+      <form @submit.prevent="handleComment">
+        <h3>Leave Comment</h3>
+        <div>
+          <label for=""></label>
+          <input class="form-label" type="text" name="" id="" v-model="editable.body">
+        </div>
+        <button class="btn btn-info">Comment</button>
+      </form>
+
+    </section>
 
 
 
@@ -55,32 +66,36 @@ import Pop from '../utils/Pop';
 import { logger } from "../utils/Logger"
 import { Account } from '../models/Account';
 import { applyStyles } from '@popperjs/core';
+import { ref } from 'vue';
+import { commentService } from '../services/CommentService'
+import EventCard from '../components/EventCard.vue';
 
 
 
 
 export default {
   setup() {
+    const editable = ref({});
     const route = useRoute();
     async function getEventsById() {
       try {
-        await eventsService.getById(route.params.eventId)
-      } catch (error) {
-        Pop.error(error)
+        await eventsService.getById(route.params.eventId);
+      }
+      catch (error) {
+        Pop.error(error);
       }
     }
     onMounted(() => {
-      getEventsById()
-    })
+      getEventsById();
+    });
     return {
+      editable,
       isCreator: computed(() => {
         if (AppState.account.id == AppState.activeEvent.creatorId) {
-          return true
-
+          return true;
         }
         else {
-          return false
-
+          return false;
         }
       }),
       // isSoldOut: computed(() => {
@@ -89,41 +104,59 @@ export default {
       //     else return false
       // }),
       isCanceled: computed(() => {
-        if (AppState.activeEvent.isCanceled == true) { return true }
-      }
-      ),
-
-      hasTicket: computed(() => {
-
-        if (AppState.tickets.find(t => t.accountId == AppState.account.id)) {
-          return true
+        if (AppState.activeEvent.isCanceled == true) {
+          return true;
         }
-        return false
+      }),
+      hasTicket: computed(() => {
+        if (AppState.tickets.find(t => t.accountId == AppState.account.id)) {
+          return true;
+        }
+        return false;
       }),
       event: computed(() => AppState.activeEvent),
       async handleTicket() {
         try {
-          await ticketService.createTicket(route.params)
-          Pop.toast('got tickets')
-        } catch (error) {
-          Pop.error(error)
-          logger.log(error)
+          await ticketService.createTicket(route.params);
+          Pop.toast("got tickets");
         }
-
+        catch (error) {
+          Pop.error(error);
+          logger.log(error);
+        }
       },
       async handleSubmit() {
         try {
-          await eventsService.deleteEvent(route.params.eventId)
-          Pop.toast('event deleted')
-        } catch (error) {
-          Pop.error(error)
-          logger.error(error)
+          await eventsService.deleteEvent(route.params.eventId);
+          Pop.toast("event deleted");
+        }
+        catch (error) {
+          Pop.error(error);
+          logger.error(error);
         }
       },
-
-    }
-  }
-
+      async handleComment() {
+        try {
+          await commentService.createComment(route.params.body);
+          Pop.toast("created comment");
+        }
+        catch (error) {
+          Pop.error(error);
+          logger.error(error);
+        }
+      }
+      // async handleSubmit() {
+      //         try {
+      //           logger.log('creating event', editable.value)
+      //           await eventsService.createEvent(editable.value)
+      //           Pop.toast('event created')
+      //         } catch (error) {
+      //           Pop.error(error)
+      //         }
+      //       }
+    };
+  },
+  components: { EventCard }
 }
 
 

@@ -1,3 +1,4 @@
+import { Forbidden } from "@bcwdev/auth0provider/lib/Errors"
 import { dbContext } from "../db/DbContext"
 
 
@@ -8,6 +9,12 @@ class TicketService {
 
         const ticket = await dbContext.Tickets.findById(id)
         // @ts-ignore
+
+        if (ticket.accountId != userId) {
+            throw new Forbidden('you can not do that')
+        }
+
+        // @ts-ignore
         const towerEvent = await dbContext.TowerEvents.findById(ticket.eventId)
         // @ts-ignore
         towerEvent.capacity += 1
@@ -16,7 +23,7 @@ class TicketService {
         // @ts-ignore
         await ticket.delete()
         // @ts-ignore
-        await ticket.save()
+        // await ticket.save()
 
 
         return 'ticket deleted'

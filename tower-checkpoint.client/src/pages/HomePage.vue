@@ -1,24 +1,26 @@
 <template>
-  <div class="row bg-dark py-1 px-5 text-light">
-    <div class="col-12">
-      <h2>Events</h2>
+  <section class="container">
+    <div class="row bg-dark py-1 px-5 text-light">
+      <div class="col-12">
+        <h2>Events</h2>
+      </div>
+      <EventForm />
+      <div class="col-12">
+        filter <i class="mdi mdi-filter"></i>
+      </div>
+      <section class=" d-flex justify-content-evenly row">
+        <div class="col-2 btn btn-outline-light rounded-pill bg-info" @click="filterTerm = ''">All</div>
+        <div class="col-2 btn btn-outline-light rounded-pill bg-info" @click="filterTerm = 'concert'">Concerts</div>
+        <div class="col-2 btn btn-outline-light rounded-pill bg-info" @click="filterTerm = 'convention'">Conventions
+        </div>
+        <div class="col-2 btn btn-outline-light rounded-pill bg-info" @click="filterTerm = 'sport'">Sports</div>
+        <div class="col-2 btn btn-outline-light rounded-pill bg-info" @click="filterTerm = 'digital'">Digital</div>
+      </section>
     </div>
-    <EventForm />
-    <div class="col-12">
-      filter <i class="mdi mdi-filter"></i>
+    <div class="row">
+      <EventCard class="col-3 my-2" v-for="e in events" :key="e.id" :event="e" />
     </div>
-    <section class=" d-flex justify-content-evenly row">
-      <div class="col-2 btn btn-outline-light rounded-pill bg-info" @click="filterTerm = ''">All</div>
-      <div class="col-2 btn btn-outline-light rounded-pill bg-info" @click="filterTerm = 'concert'">Concerts</div>
-      <div class="col-2 btn btn-outline-light rounded-pill bg-info" @click="filterTerm = 'convention'">Conventions</div>
-      <div class="col-2 btn btn-outline-light rounded-pill bg-info" @click="filterTerm = 'sport'">Sports</div>
-      <div class="col-2 btn btn-outline-light rounded-pill bg-info" @click="filterTerm = 'digital'">Digital</div>
-    </section>
-  </div>
-  <div class="row">
-    <EventCard class="col-3" v-for="e in events" :key="e.id" :event="e" />
-  </div>
-
+  </section>
 </template>
 
 <script>

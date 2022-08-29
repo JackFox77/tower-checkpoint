@@ -13,17 +13,20 @@ class TicketService {
         AppState.activeEvent.capacity -= 1
     }
 
-    async getTicketByEventId() {
-
+    async getTicketByEventId(eventId) {
+        const res = await api.get(`api/events/${eventId}/tickets`)
+        AppState.events = res.data
     }
 
 
     async getMyTickets() {
-
+        const res = await api.get('account/tickets')
+        AppState.accounttickets = res.data
     }
 
-    async deleteTicket() {
-
+    async deleteTicket(ticketId) {
+        const res = await api.delete(`api/tickets/${ticketId}`)
+        AppState.accounttickets = AppState.accounttickets.filter(t => t.id != ticketId)
     }
 
 

@@ -12,33 +12,61 @@
       </div>
     </div>
   </div> -->
+  <div v-for="t in tickets" :key="t.id">
+    {{ t.event?.name }}
+    <img class="m-3 rounded" :src="t.event?.coverImg" />
+    <button class="btn btn-info" @click="deleteTicket(t.id)">delete</button>
+  </div>
 </template>
 
 <script>
-import { popperOffsets } from '@popperjs/core'
-import { computed } from 'vue'
+// import { popperOffsets } from '@popperjs/core'
+import { computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { AppState } from '../AppState'
+import { ticketService } from '../services/TicketService'
 import { logger } from '../utils/Logger'
 import Pop from '../utils/Pop'
 export default {
   name: 'Account',
   setup() {
-    return {
-      account: computed(() => AppState.account)
+
+    const route = useRoute()
+
+    async function getTicketsById() {
+      try {
+        await ticketService.getMyTickets(route.params.accountId)
+      } catch (error) {
+        logger.error('[getting tickets]', error)
+        Pop.error(error)
+      }
     }
+
+
+    onMounted(() => {
+      getTicketsById()
+    }
+
+    )
+    return {
+      account: computed(() => AppState.account),
+      tickets: computed(() => AppState.accounttickets),
+
+
+      async deleteTicket(ticketId) {
+        try {
+          await ticketService.deleteTicket(ticketId)
+        } catch (error) {
+          Pop.error(error)
+        }
+      }
+
+    }
+
+
   }
 }
 
-
-
-async function getTicketsById() {
-  try {
-
-  } catch (error) {
-    logger.error('[getting tickets]', error)
-    Pop.error(error)
-  }
-}
 
 // // async function getProfileById() {
 //   try {
