@@ -2,8 +2,6 @@ import { Auth0Provider } from "@bcwdev/auth0provider";
 import { ticketService } from "../services/TicketService";
 import BaseController from "../utils/BaseController";
 
-
-
 export class TicketController extends BaseController {
     constructor() {
         super('api/tickets')

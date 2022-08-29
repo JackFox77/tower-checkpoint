@@ -12,10 +12,11 @@
       </div>
     </div>
   </div> -->
-  <div v-for="t in tickets" :key="t.id">
+  <div v-for="t in tickets" :key="t.id" class="bg-primary col-3 my-3 rounded d-flex">
+
     {{ t.event?.name }}
     <img class="m-3 rounded" :src="t.event?.coverImg" />
-    <button class="btn btn-info" @click="deleteTicket(t.id)">delete</button>
+    <button class="justify-self-end btn btn-info" @click="deleteTicket(t.id)">delete</button>
   </div>
 </template>
 

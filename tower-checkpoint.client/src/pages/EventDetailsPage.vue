@@ -108,12 +108,6 @@ export default {
           return true;
         }
       }),
-      hasTicket: computed(() => {
-        if (AppState.tickets.find(t => t.accountId == AppState.account.id)) {
-          return true;
-        }
-        return false;
-      }),
       event: computed(() => AppState.activeEvent),
       async handleTicket() {
         try {
@@ -137,23 +131,27 @@ export default {
       },
       async handleComment() {
         try {
-          await commentService.createComment(route.params.body);
+          editable.value.eventId = route.params.eventId
+          await commentService.createComment(editable.value)
           Pop.toast("created comment");
         }
         catch (error) {
           Pop.error(error);
           logger.error(error);
         }
+
+        // async handleSubmit() {
+        //   try {
+        //     editable.value.albumId = route.params.albumId
+        //     await picturesService.create(editable.value)
+        //     // NOTE next line clears form
+        //     editable.value = {}
+        //     Pop.success('picture added')
+        //   } catch (error) {
+        //     Pop.error(error)
+        //   }
       }
-      // async handleSubmit() {
-      //         try {
-      //           logger.log('creating event', editable.value)
-      //           await eventsService.createEvent(editable.value)
-      //           Pop.toast('event created')
-      //         } catch (error) {
-      //           Pop.error(error)
-      //         }
-      //       }
+
     };
   },
   components: { EventCard }
