@@ -14,7 +14,7 @@ class TicketService {
 
     async getTicketByEventId(eventId) {
         const res = await api.get(`api/events/${eventId}/tickets`)
-        AppState.events = res.data
+        AppState.eventtickets = res.data
     }
 
 
