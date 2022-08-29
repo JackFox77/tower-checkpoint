@@ -5,7 +5,7 @@
         <h3>Leave Comment</h3>
         <div>
             <label for=""></label>
-            <input class="form-label" type="text" name="" id="" v-model="editable.body">
+            <input class="form-label" type="text" name="" id="" v-model="editable.body" placeholder="your comment">
         </div>
         <button class="btn btn-info">Comment</button>
     </form>

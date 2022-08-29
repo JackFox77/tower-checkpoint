@@ -14,8 +14,8 @@ export class TowerEventController extends BaseController {
         this.router
             .get('', this.getAll)
             .get('/:id', this.getById)
-            .get('/:id/tickets', this.getEventTickets)
             .get('/:id/comments', this.getEventComments)
+            .get('/:id/tickets', this.getEventTickets)
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.create)
             .put('/:id', this.editEvent)

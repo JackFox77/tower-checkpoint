@@ -15,12 +15,20 @@ export class CommentsController extends BaseController {
     }
     async deleteComment(req, res, next) {
         try {
-            const message = await commentService.deleteComment(req.params.id, req.userInfo.id)
-            return res.send(message)
+            const comment = await commentService.deleteComment(req.params.id, req.userInfo.id)
+            return res.send(comment)
         } catch (error) {
             next(error)
         }
     }
+    // async remove(req, res, next) {
+    //     try {
+    //         const message = await collabsService.remove(req.params.id, req.userInfo.id)
+    //         return res.send(message)
+    //     } catch (error) {
+    //         next(error)
+    //     }
+    // }
     async create(req, res, next) {
         try {
             req.body.creatorId = req.userInfo.id

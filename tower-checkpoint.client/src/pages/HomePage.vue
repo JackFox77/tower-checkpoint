@@ -8,7 +8,7 @@
       <div class="col-12">
         filter <i class="mdi mdi-filter"></i>
       </div>
-      <section class=" d-flex justify-content-evenly row">
+      <section class=" d-flex justify-content-evenly row ">
         <div class="col-2 btn btn-outline-light rounded-pill bg-info" @click="filterTerm = ''">All</div>
         <div class="col-2 btn btn-outline-light rounded-pill bg-info" @click="filterTerm = 'concert'">Concerts</div>
         <div class="col-2 btn btn-outline-light rounded-pill bg-info" @click="filterTerm = 'convention'">Conventions

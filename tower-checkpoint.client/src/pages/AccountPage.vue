@@ -54,9 +54,9 @@ export default {
       tickets: computed(() => AppState.accounttickets),
 
 
-      async deleteTicket(ticketId) {
+      async deleteTicket(id) {
         try {
-          await ticketService.deleteTicket(ticketId)
+          await ticketService.deleteTicket(id)
         } catch (error) {
           Pop.error(error)
         }
