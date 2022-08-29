@@ -3,9 +3,9 @@
     <div class="">
         <img class="img-fluid" :src="comment.creator.picture" alt="">
         <div class="bg-warning">
-            <h5>{{ comment.creator.name }}</h5>
-            <b>{{ comment.body }}</b>
-            <button class="btn mdi mdi-delete-forever" @click="deleteComment(c.id)"></button>
+            <h5>{{  comment.creator.name  }}</h5>
+            <b>{{  comment.body  }}</b>
+            <button class="btn mdi mdi-delete-forever" @click="deleteComment(comment.id)"></button>
         </div>
 
     </div>
